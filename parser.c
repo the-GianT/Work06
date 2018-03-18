@@ -22,13 +22,19 @@ The file follows the following format:
      Every command is a single character that takes up a line
      Any command that requires arguments must have those arguments in the second line.
      The commands are as follows:
+         sphere: add a sphere to the edge matrix - 
+	    takes 4 arguemnts (cx, cy, cz, r)
+         torus: add a torus to the edge matrix - 
+	    takes 5 arguemnts (cx, cy, cz, r1, r2)
+         box: add a rectangular prism to the edge matrix - 
+	    takes 6 arguemnts (x, y, z, width, height, depth)
+
          circle: add a circle to the edge matrix - 
 	    takes 4 arguments (cx, cy, cz, r)
 	 hermite: add a hermite curve to the edge matrix -
-   takes 8 arguments (x0, y0, x1, y1, rx0, ry0, rx1, ry1)
+	    takes 8 arguments (x0, y0, x1, y1, rx0, ry0, rx1, ry1)
 	 bezier: add a bezier curve to the edge matrix -
 	    takes 8 arguments (x0, y0, x1, y1, x2, y2, x3, y3)
-
          line: add a line to the edge matrix - 
 	    takes 6 arguemnts (x0, y0, z0, x1, y1, z1)
 	 ident: set the transform matrix to the identity matrix - 
@@ -77,7 +83,25 @@ void parse_file ( char * filename,
     line[strlen(line)-1]='\0';
     printf(":%s:\n",line);
 
-    if (strncmp(line, "circle", 6) == 0) {
+    if (strncmp(line, "sphere", 6) == 0) {
+      double args[4];
+      int numinputs;
+
+      /* Read arguments: */
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
+      printf(":%s:\n", line);
+      numinputs = sscanf(line, "%lf %lf %lf %lf", args, args+1, args+2, args+3);
+      if (numinputs != 4) {
+	printf("Error: Invalid arguments for sphere\n");
+	return;
+      }
+      
+      add_sphere(edges, *args, args[1], args[2], args[3], 100);
+      
+    }
+    
+    else if (strncmp(line, "circle", 6) == 0) {
       int args[4];
       int numinputs;
 
@@ -91,7 +115,7 @@ void parse_file ( char * filename,
 	return;
       }
       
-      add_circle(edges, *args, args[1], args[2], args[3], .05);
+      add_circle(edges, *args, args[1], args[2], args[3], 100);
       
     } else if (strncmp(line, "hermite", 7) == 0) {
       int args[8];
@@ -107,7 +131,7 @@ void parse_file ( char * filename,
 	return;
       }
       
-      add_curve(edges, *args, args[1], args[2], args[3], args[4], args[5], args[6], args[7], .05, HERMITE);
+      add_curve(edges, *args, args[1], args[2], args[3], args[4], args[5], args[6], args[7], 100, HERMITE);
       
     } else if (strncmp(line, "bezier", 6) == 0) {
       int args[8];
@@ -123,7 +147,7 @@ void parse_file ( char * filename,
 	return;
       }
       
-      add_curve(edges, *args, args[1], args[2], args[3], args[4], args[5], args[6], args[7], .05, BEZIER);
+      add_curve(edges, *args, args[1], args[2], args[3], args[4], args[5], args[6], args[7], 100, BEZIER);
 
     } else if (strncmp(line, "line", 4) == 0) {
       int args[6];
