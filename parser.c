@@ -98,10 +98,40 @@ void parse_file ( char * filename,
       }
       
       add_sphere(edges, *args, args[1], args[2], args[3], 100);
+
+    } else if (strncmp(line, "torus", 5) == 0) {
+      double args[5];
+      int numinputs;
+
+      /* Read arguments: */
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
+      printf(":%s:\n", line);
+      numinputs = sscanf(line, "%lf %lf %lf %lf %lf", args, args+1, args+2, args+3, args + 4);
+      if (numinputs != 5) {
+	printf("Error: Invalid arguments for torus\n");
+	return;
+      }
       
-    }
-    
-    else if (strncmp(line, "circle", 6) == 0) {
+      add_torus(edges, *args, args[1], args[2], args[3], args[4], 100);
+
+    } else if (strncmp(line, "box", 3) == 0) {
+      double args[6];
+      int numinputs;
+
+      /* Read arguments: */
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
+      printf(":%s:\n", line);
+      numinputs = sscanf(line, "%lf %lf %lf %lf %lf %lf", args, args+1, args+2, args+3, args + 4, args + 5);
+      if (numinputs != 6) {
+	printf("Error: Invalid arguments for box\n");
+	return;
+      }
+      
+      add_box(edges, *args, args[1], args[2], args[3], args[4], args[5]);
+      
+    } else if (strncmp(line, "circle", 6) == 0) {
       int args[4];
       int numinputs;
 
