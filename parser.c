@@ -83,7 +83,7 @@ void parse_file ( char * filename,
     line[strlen(line)-1]='\0';
     printf(":%s:\n",line);
 
-    if (strcmp(line, "sphere") == 0) {
+    if (strncmp(line, "sphere", strlen(line)) == 0) {
       double args[4];
       int numinputs;
 
@@ -99,7 +99,7 @@ void parse_file ( char * filename,
       
       add_sphere(edges, *args, args[1], args[2], args[3], 100);
 
-    } else if (strcmp(line, "torus") == 0) {
+    } else if (strncmp(line, "torus", strlen(line)) == 0) {
       double args[5];
       int numinputs;
 
@@ -115,7 +115,7 @@ void parse_file ( char * filename,
       
       add_torus(edges, *args, args[1], args[2], args[3], args[4], 100);
 
-    } else if (strcmp(line, "box") == 0) {
+    } else if (strncmp(line, "box", strlen(line)) == 0) {
       double args[6];
       int numinputs;
 
@@ -131,11 +131,11 @@ void parse_file ( char * filename,
       
       add_box(edges, *args, args[1], args[2], args[3], args[4], args[5]);
 
-    } else if (strcmp(line, "clear") == 0) {
+    } else if (strncmp(line, "clear", strlen(line)) == 0) {
       free_matrix(edges);
       edges = new_matrix(4, 4);
       
-    } else if (strcmp(line, "circle") == 0) {
+    } else if (strncmp(line, "circle", strlen(line)) == 0) {
       int args[4];
       int numinputs;
 
@@ -151,7 +151,7 @@ void parse_file ( char * filename,
       
       add_circle(edges, *args, args[1], args[2], args[3], 100);
       
-    } else if (strcmp(line, "hermite") == 0) {
+    } else if (strncmp(line, "hermite", strlen(line)) == 0) {
       int args[8];
       int numinputs;
 
@@ -167,7 +167,7 @@ void parse_file ( char * filename,
       
       add_curve(edges, *args, args[1], args[2], args[3], args[4], args[5], args[6], args[7], 100, HERMITE);
       
-    } else if (strcmp(line, "bezier") == 0) {
+    } else if (strncmp(line, "bezier", strlen(line)) == 0) {
       int args[8];
       int numinputs;
 
@@ -183,7 +183,7 @@ void parse_file ( char * filename,
       
       add_curve(edges, *args, args[1], args[2], args[3], args[4], args[5], args[6], args[7], 100, BEZIER);
 
-    } else if (strcmp(line, "line") == 0) {
+    } else if (strncmp(line, "line", strlen(line)) == 0) {
       int args[6];
       int numinputs;
 
@@ -199,10 +199,10 @@ void parse_file ( char * filename,
       
       add_edge(edges, *args, args[1], args[2], args[3], args[4], args[5]);
       
-    } else if (strcmp(line, "ident") == 0) {
+    } else if (strncmp(line, "ident", strlen(line)) == 0) {
       ident(transform);
       
-    } else if (strcmp(line, "scale") == 0) {
+    } else if (strncmp(line, "scale", strlen(line)) == 0) {
       int args[3];
       int numinputs;
       struct matrix * scale_m;
@@ -221,7 +221,7 @@ void parse_file ( char * filename,
       matrix_mult(scale_m, transform);
       free_matrix(scale_m);
       
-    } else if (strcmp(line, "move") == 0) {
+    } else if (strncmp(line, "move", strlen(line)) == 0) {
       int args[3];
       int numinputs;
       struct matrix * trans_m;
@@ -240,7 +240,7 @@ void parse_file ( char * filename,
       matrix_mult(trans_m, transform);
       free_matrix(trans_m);
       
-    } else if (strcmp(line, "rotate") == 0) {
+    } else if (strncmp(line, "rotate", strlen(line)) == 0) {
       char axis;
       double theta;
       int numinputs;
@@ -270,10 +270,10 @@ void parse_file ( char * filename,
       matrix_mult(rot_m, transform);
       free_matrix(rot_m);
       
-    } else if (strcmp(line, "apply") == 0) {
+    } else if (strncmp(line, "apply", strlen(line)) == 0) {
       matrix_mult(transform, edges);
       
-    } else if (strcmp(line, "display") == 0) {
+    } else if (strncmp(line, "display", strlen(line)) == 0) {
       color c;
 
       c.red = MAX_COLOR;
@@ -284,7 +284,7 @@ void parse_file ( char * filename,
       display(s);
       clear_screen(s);
       
-    } else if (strcmp(line, "save") == 0) {
+    } else if (strncmp(line, "save", strlen(line)) == 0) {
       color c;
 
       c.red = MAX_COLOR;
@@ -301,7 +301,7 @@ void parse_file ( char * filename,
       save_extension(s, line);
       clear_screen(s);
       
-    } else if (strcmp(line, "quit") == 0) {
+    } else if (strncmp(line, "quit", strlen(line)) == 0) {
       return;
 
     } else
