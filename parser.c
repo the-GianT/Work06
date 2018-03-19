@@ -23,11 +23,11 @@ The file follows the following format:
      Any command that requires arguments must have those arguments in the second line.
      The commands are as follows:
          sphere: add a sphere to the edge matrix - 
-	    takes 4 arguemnts (cx, cy, cz, r)
+	    takes 4 arguments (cx, cy, cz, r)
          torus: add a torus to the edge matrix - 
-	    takes 5 arguemnts (cx, cy, cz, r1, r2)
+	    takes 5 arguments (cx, cy, cz, r1, r2)
          box: add a rectangular prism to the edge matrix - 
-	    takes 6 arguemnts (x, y, z, width, height, depth)
+	    takes 6 arguments (x, y, z, width, height, depth)
 
          circle: add a circle to the edge matrix - 
 	    takes 4 arguments (cx, cy, cz, r)
@@ -83,7 +83,7 @@ void parse_file ( char * filename,
     line[strlen(line)-1]='\0';
     printf(":%s:\n",line);
 
-    if (strncmp(line, "sphere", 6) == 0) {
+    if (strcmp(line, "sphere") == 0) {
       double args[4];
       int numinputs;
 
@@ -99,7 +99,7 @@ void parse_file ( char * filename,
       
       add_sphere(edges, *args, args[1], args[2], args[3], 100);
 
-    } else if (strncmp(line, "torus", 5) == 0) {
+    } else if (strcmp(line, "torus") == 0) {
       double args[5];
       int numinputs;
 
@@ -115,7 +115,7 @@ void parse_file ( char * filename,
       
       add_torus(edges, *args, args[1], args[2], args[3], args[4], 100);
 
-    } else if (strncmp(line, "box", 3) == 0) {
+    } else if (strcmp(line, "box") == 0) {
       double args[6];
       int numinputs;
 
@@ -130,8 +130,12 @@ void parse_file ( char * filename,
       }
       
       add_box(edges, *args, args[1], args[2], args[3], args[4], args[5]);
+
+    } else if (strcmp(line, "clear") == 0) {
+      free_matrix(edges);
+      edges = new_matrix(4, 4);
       
-    } else if (strncmp(line, "circle", 6) == 0) {
+    } else if (strcmp(line, "circle") == 0) {
       int args[4];
       int numinputs;
 
@@ -147,7 +151,7 @@ void parse_file ( char * filename,
       
       add_circle(edges, *args, args[1], args[2], args[3], 100);
       
-    } else if (strncmp(line, "hermite", 7) == 0) {
+    } else if (strcmp(line, "hermite") == 0) {
       int args[8];
       int numinputs;
 
@@ -163,7 +167,7 @@ void parse_file ( char * filename,
       
       add_curve(edges, *args, args[1], args[2], args[3], args[4], args[5], args[6], args[7], 100, HERMITE);
       
-    } else if (strncmp(line, "bezier", 6) == 0) {
+    } else if (strcmp(line, "bezier") == 0) {
       int args[8];
       int numinputs;
 
@@ -179,7 +183,7 @@ void parse_file ( char * filename,
       
       add_curve(edges, *args, args[1], args[2], args[3], args[4], args[5], args[6], args[7], 100, BEZIER);
 
-    } else if (strncmp(line, "line", 4) == 0) {
+    } else if (strcmp(line, "line") == 0) {
       int args[6];
       int numinputs;
 
@@ -195,10 +199,10 @@ void parse_file ( char * filename,
       
       add_edge(edges, *args, args[1], args[2], args[3], args[4], args[5]);
       
-    } else if (strncmp(line, "ident", 5) == 0) {
+    } else if (strcmp(line, "ident") == 0) {
       ident(transform);
       
-    } else if (strncmp(line, "scale", 5) == 0) {
+    } else if (strcmp(line, "scale") == 0) {
       int args[3];
       int numinputs;
       struct matrix * scale_m;
@@ -217,7 +221,7 @@ void parse_file ( char * filename,
       matrix_mult(scale_m, transform);
       free_matrix(scale_m);
       
-    } else if (strncmp(line, "move", 4) == 0) {
+    } else if (strcmp(line, "move") == 0) {
       int args[3];
       int numinputs;
       struct matrix * trans_m;
@@ -236,7 +240,7 @@ void parse_file ( char * filename,
       matrix_mult(trans_m, transform);
       free_matrix(trans_m);
       
-    } else if (strncmp(line, "rotate", 6) == 0) {
+    } else if (strcmp(line, "rotate") == 0) {
       char axis;
       double theta;
       int numinputs;
@@ -266,10 +270,10 @@ void parse_file ( char * filename,
       matrix_mult(rot_m, transform);
       free_matrix(rot_m);
       
-    } else if (strncmp(line, "apply", 5) == 0) {
+    } else if (strcmp(line, "apply") == 0) {
       matrix_mult(transform, edges);
       
-    } else if (strncmp(line, "display", 7) == 0) {
+    } else if (strcmp(line, "display") == 0) {
       color c;
 
       c.red = MAX_COLOR;
@@ -280,7 +284,7 @@ void parse_file ( char * filename,
       display(s);
       clear_screen(s);
       
-    } else if (strncmp(line, "save", 4) == 0) {
+    } else if (strcmp(line, "save") == 0) {
       color c;
 
       c.red = MAX_COLOR;
@@ -297,7 +301,7 @@ void parse_file ( char * filename,
       save_extension(s, line);
       clear_screen(s);
       
-    } else if (strncmp(line, "quit", 4) == 0) {
+    } else if (strcmp(line, "quit") == 0) {
       return;
 
     } else
