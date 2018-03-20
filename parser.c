@@ -135,8 +135,7 @@ void parse_file ( char * filename,
       add_box(edges, *args, args[1], args[2], args[3], args[4], args[5]);
 
     } else if (strncmp(line, "clear", strlen(line)) == 0) {
-      free_matrix(edges);
-      edges = new_matrix(4, 4);
+      edges->lastcol = 0;
       
     } else if (strncmp(line, "circle", strlen(line)) == 0) {
       int args[4];
