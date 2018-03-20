@@ -83,7 +83,10 @@ void parse_file ( char * filename,
     line[strlen(line)-1]='\0';
     printf(":%s:\n",line);
 
-    if (strncmp(line, "sphere", strlen(line)) == 0) {
+    if (*line == '#') {
+      /* Do nothing because it's a comment */
+      
+    } else if (strncmp(line, "sphere", strlen(line)) == 0) {
       double args[4];
       int numinputs;
 
