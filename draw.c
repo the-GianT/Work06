@@ -63,7 +63,7 @@ void add_sphere( struct matrix * edges,
 
   sphere = generate_sphere(cx, cy, cz, r, step);
 
-  for (i = 0; i < sphere->lastcol - 1; i++) {
+  for (i = 0; i < sphere->lastcol; i++) {
     x = sphere->m[0][i];
     y = sphere->m[1][i];
     z = sphere->m[2][i];
@@ -132,7 +132,21 @@ struct matrix * generate_sphere(double cx, double cy, double cz,
 void add_torus( struct matrix * edges, 
                 double cx, double cy, double cz,
                 double r1, double r2, int step ) {
-  return;
+  struct matrix * torus;
+  int i;
+  double x, y, z;
+
+  torus = generate_torus(cx, cy, cz, r1, r2, step);
+
+  for (i = 0; i < torus->lastcol; i++) {
+    x = torus->m[0][i];
+    y = torus->m[1][i];
+    z = torus->m[2][i];
+
+    add_edge(edges, x, y, z, x + 1, y, z);
+  }
+
+  free_matrix(torus);
 }
 
 /*======== void generate_torus() ==========
@@ -149,29 +163,34 @@ void add_torus( struct matrix * edges,
   ====================*/
 struct matrix * generate_torus( double cx, double cy, double cz,
                                 double r1, double r2, int step ) {
-  struct matrix * circle_pts; // circle for rotation
+  struct matrix * circle_pts;
   struct matrix * translate;
   struct matrix * rotate;
-  // struct matrix * transform;
   struct matrix * torus;
-  int t;
+  int t, u;
 
   circle_pts = new_matrix(4, step);
-  translate = make_translate(r1, 0, 0);
-  rotate = make_rotY(2 * M_PI * t / step);
-  // transform = new_matrix(4, 4);
+  translate = make_translate(r2, 0, 0);
+  rotate = make_rotY(2 * M_PI / step);
   torus = new_matrix(4, step * step);
-  // ident(transform);
-  
+
+  /* start at origin: */
   add_circle(circle_pts, 0, 0, 0, r1, step);
-  
+
+  /* move away from origin: */
   matrix_mult(translate, circle_pts);
-  
-  for (t = 0; t < step, t++) {
-    matrix_mult(rotate, transform);
-    for
+
+  /* rotate circle around */
+  for (t = 0; t < step; t++) {
+    for (u = 0; u < circle_pts->lastcol; u++) {
+      add_point(torus, circle_pts->m[0][u], circle_pts->m[1][u], circle_pts->m[2][u]);
+    }
+    matrix_mult(rotate, circle_pts);
   }
-  
+
+  free_matrix(circle_pts);
+  free_matrix(translate);
+  free_matrix(rotate);
   return torus;
 }
 
