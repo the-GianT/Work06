@@ -94,7 +94,7 @@ struct matrix * generate_sphere(double cx, double cy, double cz,
   int p; // index for phi
   double x, y, z; // coordinates
   
-  sphere = new_matrix(4, 4);
+  sphere = new_matrix(4, 10000);
   
   for (p = 0; p < step; p++) {
     phi = 2 * M_PI * p / step;
@@ -149,7 +149,20 @@ void add_torus( struct matrix * edges,
   ====================*/
 struct matrix * generate_torus( double cx, double cy, double cz,
                                 double r1, double r2, int step ) {
-  return NULL;
+  struct matrix * circle_pts;
+  struct matrix * translate;
+  struct matrix * rotate;
+  struct matrix * transform;
+  struct matrix * torus;
+
+  circle_pts = new_matrix(4, 10000);
+  translate = make_translate(r1, 0, 0);
+  rotate = make_rotY(2 * M_PI / step);
+
+  add_circle(torus, 0, 0, 0, r1, 100);
+  matrix_mult(translate, circle_pts);
+  
+  return torus;
 }
 
 /*======== void add_circle() ==========
