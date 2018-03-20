@@ -152,23 +152,24 @@ struct matrix * generate_torus( double cx, double cy, double cz,
   struct matrix * circle_pts; // circle for rotation
   struct matrix * translate;
   struct matrix * rotate;
-  struct matrix * transform;
+  // struct matrix * transform;
   struct matrix * torus;
   int t;
 
-  circle_pts = new_matrix(4, 100);
-
-  add_circle(circle_pts, 0, 0, 0, r1, 100);
-  
+  circle_pts = new_matrix(4, step);
   translate = make_translate(r1, 0, 0);
-  matrix_mult(translate, transform);
-
-  torus = new_matrix(4, 10000);
+  rotate = make_rotY(2 * M_PI * t / step);
+  // transform = new_matrix(4, 4);
+  torus = new_matrix(4, step * step);
+  // ident(transform);
+  
+  add_circle(circle_pts, 0, 0, 0, r1, step);
+  
+  matrix_mult(translate, circle_pts);
+  
   for (t = 0; t < step, t++) {
-    rotate = make_rotY(2 * M_PI * t / step);
     matrix_mult(rotate, transform);
-    free_matrix(rotate);
-    // for
+    for
   }
   
   return torus;
