@@ -179,6 +179,7 @@ struct matrix * generate_torus( double cx, double cy, double cz,
 
   /* move away from origin: */
   matrix_mult(translate, circle_pts);
+  free_matrix(translate);
 
   /* rotate circle around */
   for (t = 0; t < step; t++) {
@@ -187,10 +188,15 @@ struct matrix * generate_torus( double cx, double cy, double cz,
     }
     matrix_mult(rotate, circle_pts);
   }
-
+  
   free_matrix(circle_pts);
-  free_matrix(translate);
   free_matrix(rotate);
+
+  /* Translate to appropriate position: */
+  translate = make_translate(cx, cy, cz);
+  matrix_mult(translate, torus);
+
+  free_matrix(translate);
   return torus;
 }
 
