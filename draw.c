@@ -74,6 +74,13 @@ void add_sphere( struct matrix * edges,
   ====================*/
 struct matrix * generate_sphere(double cx, double cy, double cz,
                                 double r, int step ) {
+  int t; // index for theta
+  int p; // index for phi
+  for (p = 0; p < step; p++) {
+    for (t = 0; t < step; t++) {
+      
+    }
+  }
   return NULL;
 }
 

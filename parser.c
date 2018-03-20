@@ -258,7 +258,8 @@ void parse_file ( char * filename,
 	printf("Error: Invalid arguments for rotate\n");
 	return;
       }
-      
+
+      theta = theta * (M_PI / 180);
       if (axis == 'x')
 	rot_m = make_rotX(theta);
       else if (axis == 'y')

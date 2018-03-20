@@ -152,18 +152,15 @@ Returns: The rotation matrix created using theta as the
 angle of rotation and X as the axis of rotation.
 ====================*/
 struct matrix * make_rotX(double theta) {
-  struct matrix * retMat;
-  double theta_rad = theta * M_PI / 180; // convert to radians
-  
-  retMat = new_matrix(4, 4);
-  ident(retMat);
+  struct matrix *t = new_matrix(4, 4);
+  ident(t);
 
-  retMat->m[1][1] = cos(theta_rad);
-  retMat->m[1][2] = -sin(theta_rad);
-  retMat->m[2][1] = sin(theta_rad);
-  retMat->m[2][2] = cos(theta_rad);
+  t->m[1][1] = cos(theta);
+  t->m[1][2] = -1 * sin(theta);
+  t->m[2][1] = sin(theta);
+  t->m[2][2] = cos(theta);
   
-  return retMat;
+  return t;
 }
 
 /*======== struct matrix * make_rotY() ==========
@@ -173,18 +170,15 @@ Returns: The rotation matrix created using theta as the
 angle of rotation and Y as the axis of rotation.
 ====================*/
 struct matrix * make_rotY(double theta) {
-  struct matrix * retMat;
-  double theta_rad = theta * M_PI / 180; // convert to radians
+  struct matrix *t = new_matrix(4, 4);
+  ident(t);
   
-  retMat = new_matrix(4, 4);
-  ident(retMat);
+  t->m[0][0] = cos(theta);
+  t->m[2][0] = -1 * sin(theta);
+  t->m[0][2] = sin(theta);
+  t->m[2][2] = cos(theta);
 
-  retMat->m[0][0] = cos(theta_rad);
-  retMat->m[0][2] = sin(theta_rad);
-  retMat->m[2][0] = -sin(theta_rad);
-  retMat->m[2][2] = cos(theta_rad);
-  
-  return retMat;
+  return t;
 }
 
 /*======== struct matrix * make_rotZ() ==========
@@ -194,18 +188,15 @@ Returns: The rotation matrix created using theta as the
 angle of rotation and Z as the axis of rotation.
 ====================*/
 struct matrix * make_rotZ(double theta) {
-  struct matrix * retMat;
-  double theta_rad = theta * M_PI / 180; // convert to radians
+  struct matrix *t = new_matrix(4, 4);
+  ident(t);
   
-  retMat = new_matrix(4, 4);
-  ident(retMat);
+  t->m[0][0] = cos(theta);
+  t->m[0][1] = -1 * sin(theta);
+  t->m[1][0] = sin(theta);
+  t->m[1][1] = cos(theta);
 
-  retMat->m[0][0] = cos(theta_rad);
-  retMat->m[0][1] = -sin(theta_rad);
-  retMat->m[1][0] = sin(theta_rad);
-  retMat->m[1][1] = cos(theta_rad);
-  
-  return retMat;
+  return t;
 }
 
 
